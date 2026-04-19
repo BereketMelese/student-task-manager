@@ -1,6 +1,11 @@
 {
   "name": "student-task-manager",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "packages/shared/*"
+  ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
