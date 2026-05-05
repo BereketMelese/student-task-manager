@@ -1,28 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import { useTasks } from "@repo/react-query-hooks";
-import { SearchBar } from "@repo/ui";
+import { SearchBar, ThemeToggle } from "@repo/ui";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
   const { data: tasks = [], isLoading, error } = useTasks();
+
+  // Ensure component is mounted before rendering theme-dependent content
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Filter tasks by title (case-insensitive)
   const filteredTasks = tasks.filter((task) =>
     task.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-slate-950">
       <main className="flex flex-1 w-full max-w-4xl flex-col gap-8 py-8 px-6 sm:px-8">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-4xl font-bold text-black dark:text-white">
-            Task Dashboard
-          </h1>
-          <p className="text-slate-600 dark:text-slate-400">
-            Manage and search your tasks
-          </p>
+        {/* Header with ThemeToggle */}
+        <div className="flex items-start justify-between">
+          <div className="flex flex-col gap-2">
+            <h1 className="text-4xl font-bold text-black dark:text-white">
+              Task Dashboard
+            </h1>
+            <p className="text-slate-600 dark:text-slate-400">
+              Manage and search your tasks
+            </p>
+          </div>
+          <ThemeToggle
+            theme={theme as "light" | "dark"}
+            toggleTheme={() =>
+              setTheme(theme === "dark" ? "light" : "dark")
+            }
+          />
         </div>
 
         {/* Search Bar */}
@@ -107,4 +128,5 @@ export default function Home() {
     </div>
   );
 }
+
 
