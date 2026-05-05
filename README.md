@@ -156,18 +156,18 @@ pnpm --filter @repo/ui check-types
 
 | Week | Commit | Component | Type | Dependencies | Author |
 |---|---|---|---|---|---|
-| W1-D1 | #1 | Monorepo Setup | Infrastructure | None | **Nibru** |
-| W1-D2 | #2 | Mongoose Schema + Model | Persistence | `@repo/shared-types` | **Nibru** |
-| W1-D3 | #3 | Task Service | Business Logic | Model + Types | **Nibru** |
-| W2-D1 | #4 | Express API Routes | Interface | Task Service | **Nibru** |
-| W2-D2 | #5 | API Client (`taskApi`) | HTTP Client | `@repo/shared-types` | **Nibru** |
-| W2-D3 | #6 | React Query Hooks | State Management | API Client | **Nibru** |
+| W1-D1 | #1 | Monorepo Setup | Infrastructure | None | **Bereket** |
+| W1-D2 | #2 | Mongoose Schema + Model | Persistence | `@repo/shared-types` | **Bereket** |
+| W1-D3 | #3 | Task Service | Business Logic | Model + Types | **Bereket** |
+| W2-D1 | #4 | Express API Routes | Interface | Task Service | **Bereket** |
+| W2-D2 | #5 | API Client (`taskApi`) | HTTP Client | `@repo/shared-types` | **Bereket** |
+| W2-D3 | #6 | React Query Hooks | State Management | API Client | **Bereket** |
 | W3-D1 | #7 | Shared UI Library | Presentation | `@repo/shared-types` | **Nibru** |
 | W3-D2 | #8 | Task Dashboard Page | View | UI + Hooks | **Nibru** |
 | W3-D3 | #9 | Task Creation Form | Feature | All above | **Nibru** |
-| W3-D1 | #10 | MongoDB Docker Config | Infrastructure | None | **Yeabsira** |
-| W3-D1 | #11 | Search Bar UI Component | Presentation | `@repo/ui` | **Yeabsira** |
-| W3-D2 | #12 | Search Bar Integration | Feature | UI + Hooks | **Yeabsira** |
+| W3-D1 | #10 | Search Bar UI Component | Presentation | `@repo/ui` | **Yeabsira** |
+| W3-D2 | #11 | Search Bar Integration | Feature | UI + Hooks | **Yeabsira** |
+| W3-D2 | #12 | Theme Toggle UI Component | Presentation | `@repo/ui` | **Yeabsira** |
 | W3-D3 | #13 | Dark Mode / Theme Toggle | Feature | `next-themes` | **Yeabsira** |
 
 ---
@@ -203,8 +203,9 @@ Base URL: `http://localhost:3001`
 
 | Name | GitHub | Commits | Responsibilities |
 |---|---|---|---|
-| **Nibru** | [@nibruad16](https://github.com/nibruad16) | #1 → #9 | Monorepo setup, Shared Types, Mongoose Schema, Task Service, Express API, API Client, React Query Hooks, Shared UI Library, Task Dashboard, Task Creation Form |
-| **Yeabsira** | — | #10 → #13 | MongoDB Docker config, Search Bar UI component, Search Bar integration, Theme Toggle UI component, Dark Mode integration |
+| **Bereket** | [@BereketMelese](https://github.com/BereketMelese) | #1 → #6 | Monorepo setup, Shared Types, Mongoose Schema, Task Service, Express API, API Client, React Query Hooks |
+| **Nibru** | [@nibruad16](https://github.com/nibruad16) | #7 → #9 | Shared UI Library, Task Dashboard, Task Creation Form, MongoDB Docker Config |
+| **Yeabsira** | [@yeab-sira1](https://github.com/yeab-sira1) | #10 → #13 | Search Bar UI component, Search Bar integration, Theme Toggle UI component, Dark Mode integration |
 
 ---
 
