@@ -6,9 +6,9 @@ import { connectDB } from "./config/db.js";
 import { env } from "./config/env.js";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
 import { taskRouter } from "./routes/tasks.js";
-import { TaskAPI, taskApi } from "./taskApi.js";
+import { TaskAPI, taskApi, type GetAllTasksFilters } from "./taskApi.js";
 
-export { client, TaskAPI, taskApi };
+export { client, TaskAPI, taskApi, type GetAllTasksFilters };
 export const taskRouterWithType: Router = taskRouter;
 
 const app = express();
