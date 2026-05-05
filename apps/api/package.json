@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@repo/shared-types": "workspace:*",
+    "axios": "^1.16.0",
     "cors": "^2.8.6",
     "dotenv": "^16.4.7",
     "express": "^5.2.1",
@@ -26,7 +27,7 @@
     "@types/express": "^5.0.6",
     "@types/node": "^25.6.0",
     "tsx": "^4.21.0",
-    "vitest": "^3.2.4",
-    "typescript": "5.9.2"
+    "typescript": "5.9.2",
+    "vitest": "^3.2.4"
   }
 }

@@ -1,10 +1,15 @@
 import cors from "cors";
-import express from "express";
+import express, { type Router } from "express";
 
+import { client } from "./client.js";
 import { connectDB } from "./config/db.js";
 import { env } from "./config/env.js";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
 import { taskRouter } from "./routes/tasks.js";
+import { TaskAPI, taskApi } from "./taskApi.js";
+
+export { client, TaskAPI, taskApi };
+export const taskRouterWithType: Router = taskRouter;
 
 const app = express();
 

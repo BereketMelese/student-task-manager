@@ -9,12 +9,21 @@ import {
   updateTask,
 } from "./taskService.js";
 
-const mockFind = vi.fn();
-const mockFindById = vi.fn();
-const mockCreate = vi.fn();
-const mockFindByIdAndUpdate = vi.fn();
-const mockFindByIdAndDelete = vi.fn();
-const mockToTask = vi.fn();
+const {
+  mockFind,
+  mockFindById,
+  mockCreate,
+  mockFindByIdAndUpdate,
+  mockFindByIdAndDelete,
+  mockToTask,
+} = vi.hoisted(() => ({
+  mockFind: vi.fn(),
+  mockFindById: vi.fn(),
+  mockCreate: vi.fn(),
+  mockFindByIdAndUpdate: vi.fn(),
+  mockFindByIdAndDelete: vi.fn(),
+  mockToTask: vi.fn(),
+}));
 
 vi.mock("../models/task.model.js", () => ({
   TaskModel: {

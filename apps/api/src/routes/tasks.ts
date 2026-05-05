@@ -16,7 +16,7 @@ import {
   updateTask,
 } from "../services/taskService.js";
 
-export const taskRouter = Router();
+export const taskRouter: Router = Router();
 
 taskRouter.get("/", async (req, res, next) => {
   try {

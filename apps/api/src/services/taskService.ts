@@ -8,11 +8,14 @@ import type {
 import { TaskModel, toTask } from "../models/task.model.js";
 
 export interface GetAllTasksFilters {
-  status?: TaskStatus;
-  assignee?: string;
+  status?: TaskStatus | undefined;
+  assignee?: string | undefined;
 }
 
-function assertNonEmptyString(value: unknown, fieldName: string): asserts value is string {
+function assertNonEmptyString(
+  value: unknown,
+  fieldName: string,
+): asserts value is string {
   if (typeof value !== "string" || value.trim().length === 0) {
     throw new Error(`${fieldName} is required and must be a non-empty string`);
   }
@@ -29,7 +32,9 @@ function validateUpdateTaskData(data: UpdateTaskDTO): void {
   }
 }
 
-export async function getAllTasks(filters: GetAllTasksFilters = {}): Promise<Task[]> {
+export async function getAllTasks(
+  filters: GetAllTasksFilters = {},
+): Promise<Task[]> {
   const query: Record<string, unknown> = {};
 
   if (filters.status) {
@@ -56,7 +61,10 @@ export async function createTask(data: CreateTaskDTO): Promise<Task> {
   return toTask(document);
 }
 
-export async function updateTask(id: string, data: UpdateTaskDTO): Promise<Task | null> {
+export async function updateTask(
+  id: string,
+  data: UpdateTaskDTO,
+): Promise<Task | null> {
   validateUpdateTaskData(data);
 
   const document = await TaskModel.findByIdAndUpdate(id, data, {

@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
+import mongoose from "mongoose";
 import { ZodError } from "zod";
 
 export class HttpError extends Error {
@@ -10,7 +11,11 @@ export class HttpError extends Error {
   }
 }
 
-export function notFoundHandler(_req: Request, _res: Response, next: NextFunction): void {
+export function notFoundHandler(
+  _req: Request,
+  _res: Response,
+  next: NextFunction,
+): void {
   next(new HttpError(404, "Route not found"));
 }
 
@@ -33,6 +38,24 @@ export function errorHandler(
 
   if (error instanceof HttpError) {
     res.status(error.statusCode).json({ message: error.message });
+    return;
+  }
+
+  if (error instanceof mongoose.Error.ValidationError) {
+    res.status(400).json({
+      message: "Validation failed",
+      errors: Object.values(error.errors).map((err) => ({
+        path: err.path,
+        message: err.message,
+      })),
+    });
+    return;
+  }
+
+  if (error instanceof mongoose.Error.CastError) {
+    res.status(400).json({
+      message: `Invalid ${error.path}: ${String(error.value)}`,
+    });
     return;
   }
 
