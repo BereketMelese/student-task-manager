@@ -3,7 +3,8 @@ import express from "express";
 
 import { connectDB } from "./config/db.js";
 import { env } from "./config/env.js";
-import { TaskModel, toTask } from "./models/task.model.js";
+import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
+import { taskRouter } from "./routes/tasks.js";
 
 const app = express();
 
@@ -14,26 +15,9 @@ app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
 });
 
-app.get("/tasks", async (_req, res, next) => {
-  try {
-    const documents = await TaskModel.find().sort({ createdAt: -1 }).exec();
-    res.json(documents.map((document) => toTask(document)));
-  } catch (error) {
-    next(error);
-  }
-});
-
-app.use(
-  (
-    error: unknown,
-    _req: express.Request,
-    res: express.Response,
-    _next: express.NextFunction,
-  ) => {
-    console.error("Unhandled API error.", error);
-    res.status(500).json({ message: "Internal server error" });
-  },
-);
+app.use("/tasks", taskRouter);
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 async function bootstrap() {
   try {
