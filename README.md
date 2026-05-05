@@ -154,17 +154,21 @@ pnpm --filter @repo/ui check-types
 
 ## 📅 Development Log — Commit History
 
-| Week | Commit | Component | Type | Dependencies |
-|---|---|---|---|---|
-| W1-D1 | #1 | Monorepo Setup | Infrastructure | None |
-| W1-D2 | #2 | Mongoose Schema + Model | Persistence | `@repo/shared-types` |
-| W1-D3 | #3 | Task Service | Business Logic | Model + Types |
-| W2-D1 | #4 | Express API Routes | Interface | Task Service |
-| W2-D2 | #5 | API Client (`taskApi`) | HTTP Client | `@repo/shared-types` |
-| W2-D3 | #6 | React Query Hooks | State Management | API Client |
-| W3-D1 | #7 | Shared UI Library | Presentation | `@repo/shared-types` |
-| W3-D2 | #8 | Task Dashboard Page | View | UI + Hooks |
-| W3-D3 | #9 | Task Creation Form | Feature | All above |
+| Week | Commit | Component | Type | Dependencies | Author |
+|---|---|---|---|---|---|
+| W1-D1 | #1 | Monorepo Setup | Infrastructure | None | **Nibru** |
+| W1-D2 | #2 | Mongoose Schema + Model | Persistence | `@repo/shared-types` | **Nibru** |
+| W1-D3 | #3 | Task Service | Business Logic | Model + Types | **Nibru** |
+| W2-D1 | #4 | Express API Routes | Interface | Task Service | **Nibru** |
+| W2-D2 | #5 | API Client (`taskApi`) | HTTP Client | `@repo/shared-types` | **Nibru** |
+| W2-D3 | #6 | React Query Hooks | State Management | API Client | **Nibru** |
+| W3-D1 | #7 | Shared UI Library | Presentation | `@repo/shared-types` | **Nibru** |
+| W3-D2 | #8 | Task Dashboard Page | View | UI + Hooks | **Nibru** |
+| W3-D3 | #9 | Task Creation Form | Feature | All above | **Nibru** |
+| W3-D1 | #10 | MongoDB Docker Config | Infrastructure | None | **Yeabsira** |
+| W3-D1 | #11 | Search Bar UI Component | Presentation | `@repo/ui` | **Yeabsira** |
+| W3-D2 | #12 | Search Bar Integration | Feature | UI + Hooks | **Yeabsira** |
+| W3-D3 | #13 | Dark Mode / Theme Toggle | Feature | `next-themes` | **Yeabsira** |
 
 ---
 
@@ -197,10 +201,10 @@ Base URL: `http://localhost:3001`
 
 ## 👥 Team
 
-| Name | Role |
-|---|---|
-| Bereket Melese | Shared Types → API → Dashboard → Creation Form |
-| Friend | Search Bar component + Dark Mode component |
+| Name | GitHub | Commits | Responsibilities |
+|---|---|---|---|
+| **Nibru** | [@nibruad16](https://github.com/nibruad16) | #1 → #9 | Monorepo setup, Shared Types, Mongoose Schema, Task Service, Express API, API Client, React Query Hooks, Shared UI Library, Task Dashboard, Task Creation Form |
+| **Yeabsira** | — | #10 → #13 | MongoDB Docker config, Search Bar UI component, Search Bar integration, Theme Toggle UI component, Dark Mode integration |
 
 ---
 
