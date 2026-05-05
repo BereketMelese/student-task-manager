@@ -1,159 +1,209 @@
-# Turborepo starter
+# 📚 Student Task Manager
 
-This Turborepo starter is maintained by the Turborepo core team.
+A production-ready, component-based monorepo for managing academic tasks. Built for a Component-Based Software Development class to demonstrate reusability, separation of concerns, and modern full-stack architecture.
 
-## Using this example
+---
 
-Run the following command:
+## 🏗️ Tech Stack
 
-```sh
-npx create-turbo@latest
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js 16 (App Router), React 19, Tailwind CSS v4 |
+| Backend | Express.js 5, Node.js |
+| Database | MongoDB + Mongoose |
+| Data Fetching | TanStack Query (React Query v5) |
+| Monorepo | Turborepo + pnpm workspaces |
+| Language | TypeScript (end-to-end) |
+| Validation | Zod (API & frontend) |
+
+---
+
+## 📁 Project Structure
+
+```
+student-task-manager/
+├── apps/
+│   ├── api/                        # Express REST API + Mongoose
+│   │   └── src/
+│   │       ├── models/             # Mongoose Task schema
+│   │       ├── services/           # Business logic (taskService)
+│   │       ├── routes/             # REST endpoints (/tasks)
+│   │       ├── middleware/         # Zod validation + error handler
+│   │       └── config/             # DB connection + env config
+│   └── web/                        # Next.js 16 frontend
+│       ├── app/                    # App Router (layout, page)
+│       ├── components/             # TaskDashboardClient, CreateTaskModal
+│       └── lib/                    # Zod form validation schema
+├── packages/
+│   ├── shared/types/               # @repo/shared-types — Task, DTO interfaces
+│   ├── ui/                         # @repo/ui — Shared React component library
+│   ├── react-query-hooks/          # @repo/react-query-hooks — Data fetching hooks
+│   ├── eslint-config/              # Shared ESLint config
+│   └── typescript-config/          # Shared TypeScript config
+└── docker-compose.yml              # MongoDB container
 ```
 
-## What's inside?
+---
 
-This Turborepo includes the following packages/apps:
+## 🧩 Component Architecture
 
-### Apps and Packages
+Each package is an independent, reusable component with clear dependencies:
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo build
+```
+@repo/shared-types  ←  Foundation (no deps)
+       ↓
+@repo/ui            ←  UI components (depends on shared-types)
+       ↓
+@repo/api           ←  API + Mongoose models (depends on shared-types)
+       ↓
+@repo/react-query-hooks  ←  Data layer (depends on api + shared-types)
+       ↓
+apps/web            ←  Dashboard (depends on all packages above)
 ```
 
-Without global `turbo`, use your package manager:
+---
 
-```sh
-cd my-turborepo
-npx turbo build
-pnpm dlx turbo build
-pnpm exec turbo build
+## 📦 Shared UI Components (`@repo/ui`)
+
+| Component | Description |
+|---|---|
+| `Button` | 4 variants (primary, secondary, destructive, ghost), 3 sizes, loading state |
+| `Card` | Compound component — `CardHeader`, `CardBody`, `CardFooter` |
+| `Badge` | Colour-coded for `TaskStatus` and `TaskPriority` |
+| `TaskCard` | Displays a full task with priority, status, due date, overdue warning |
+| `Modal` | Backdrop blur, Escape-key dismiss, aria accessible |
+| `Input` | Label, error state, focus ring |
+| `Select` | Dropdown with options array, same style as Input |
+| `LoadingSpinner` | 3 sizes (sm / md / lg) |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) >= 18
+- [pnpm](https://pnpm.io/) >= 9
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (for MongoDB)
+
+### 1. Clone and Install
+
+```bash
+git clone https://github.com/BereketMelese/student-task-manager.git
+cd student-task-manager
+pnpm install
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+### 2. Start MongoDB with Docker
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo build --filter=docs
+```bash
+docker-compose up -d
 ```
 
-Without global `turbo`:
+This starts a MongoDB instance on `mongodb://localhost:27017`.
 
-```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+### 3. Configure Environment
+
+```bash
+cp apps/api/.env.example apps/api/.env
 ```
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo dev
+The default `.env` content:
+```env
+MONGODB_URI=mongodb://127.0.0.1:27017/student_task_manager
+PORT=3001
 ```
 
-Without global `turbo`, use your package manager:
+### 4. Start Development Servers
 
-```sh
-cd my-turborepo
-npx turbo dev
-pnpm exec turbo dev
-pnpm exec turbo dev
+```bash
+pnpm dev
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+Turborepo will start both apps in parallel:
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+| App | URL |
+|---|---|
+| 🌐 Web Dashboard | http://localhost:3000 |
+| ⚙️ API Server | http://localhost:3001 |
+| ❤️ Health Check | http://localhost:3001/health |
 
-```sh
-turbo dev --filter=web
+---
+
+## 🛠️ Available Scripts
+
+Run from the **project root**:
+
+| Command | Description |
+|---|---|
+| `pnpm dev` | Start all apps in development mode |
+| `pnpm build` | Build all packages and apps |
+| `pnpm lint` | Lint all packages |
+| `pnpm format` | Format all files with Prettier |
+| `pnpm check-types` | TypeScript type-check all packages |
+
+Run for a **specific package**:
+
+```bash
+pnpm --filter web dev          # Start only the web app
+pnpm --filter @repo/api dev    # Start only the API
+pnpm --filter @repo/ui check-types
 ```
 
-Without global `turbo`:
+---
 
-```sh
-npx turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+## 📅 Development Log — Commit History
+
+| Week | Commit | Component | Type | Dependencies |
+|---|---|---|---|---|
+| W1-D1 | #1 | Monorepo Setup | Infrastructure | None |
+| W1-D2 | #2 | Mongoose Schema + Model | Persistence | `@repo/shared-types` |
+| W1-D3 | #3 | Task Service | Business Logic | Model + Types |
+| W2-D1 | #4 | Express API Routes | Interface | Task Service |
+| W2-D2 | #5 | API Client (`taskApi`) | HTTP Client | `@repo/shared-types` |
+| W2-D3 | #6 | React Query Hooks | State Management | API Client |
+| W3-D1 | #7 | Shared UI Library | Presentation | `@repo/shared-types` |
+| W3-D2 | #8 | Task Dashboard Page | View | UI + Hooks |
+| W3-D3 | #9 | Task Creation Form | Feature | All above |
+
+---
+
+## 🌐 API Endpoints
+
+Base URL: `http://localhost:3001`
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/health` | Server + DB health check |
+| `GET` | `/tasks` | Get all tasks (filter by `?status=todo`) |
+| `GET` | `/tasks/:id` | Get a single task |
+| `POST` | `/tasks` | Create a new task |
+| `PATCH` | `/tasks/:id` | Update a task |
+| `DELETE` | `/tasks/:id` | Delete a task |
+
+### Create Task — Request Body
+
+```json
+{
+  "studentId": "student-001",
+  "title": "Complete Assignment 3",
+  "description": "Optional description",
+  "priority": "high",
+  "dueDate": "2026-05-20T00:00:00.000Z"
+}
 ```
 
-### Remote Caching
+---
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+## 👥 Team
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+| Name | Role |
+|---|---|
+| Bereket Melese | Shared Types → API → Dashboard → Creation Form |
+| Friend | Search Bar component + Dark Mode component |
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+---
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+## 📄 License
 
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+Private — Academic project for Component-Based Software Development class.
